@@ -18,8 +18,12 @@ from numpy import polyval, polyfit
 #LongPendulo = 83
 
 OmegCuadrados=[]
+
+# What kind of L?
 L = [46.8, 59, 66, 78.5, 83]
 InversoLongitudes = [100./46.8, 100./59, 100./66, 100./78.5, 100./83]
+
+# Fotogramas que funcionan
 Puntos = [[236,1256],[1516,2761],[3016,4381],[4711,6151],[6401,7776]]
 
 #00236-01256    01516-02761   03016-04381   04711-06151     06401-07776
@@ -44,9 +48,11 @@ def Pendulo(NoImagMin,NoImagMax):
         GrisBin= np.where(D<0.2,1,0)
         Filtro = nd.median_filter(GrisBin, (7,7))
         FiltroNumber,n = nd.label(Filtro)
+        # Center of mass
         Elementos  = np.zeros(n+1)
+
         for i in range(0,480):
-            counts = np.bincount(FiltroNumber[i])
+            counts = np.bincount( list(map(float, FiltroNumber[i])))
             longitud = len(counts)
             for j in range(1,longitud):
                 a = counts[j]
@@ -69,7 +75,6 @@ def Pendulo(NoImagMin,NoImagMax):
 
     Lol2=np.argmax(FFT)
     OmegaCuad = float((Lol2*tempo*tempo*10/(NoImagMax-NoImagMin))**2)
-
     return OmegaCuad
 
 
@@ -79,6 +84,7 @@ for i in range(0,len(InversoLongitudes),1):
     print L[i], 'cm'
     NoImagMin=Puntos[i][0]
     NoImagMax=Puntos[i][1]
+    Pendulo(NoImagMin,NoImagMax)
     OmegCuadrados.append(Pendulo(NoImagMin,NoImagMax))
 
 coeficientes = polyfit(InversoLongitudes,OmegCuadrados,1)
