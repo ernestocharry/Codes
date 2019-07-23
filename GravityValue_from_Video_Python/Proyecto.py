@@ -1,6 +1,19 @@
 #!/usr/bin/python
 # -*- coding_ utf8 -*-
 
+# Autor: Feelix Ernesto Charry Pastrana
+# Correo: feecharrypa@unal.edu.co
+# 2019 07 23
+#
+# This code analyzes determine the value of the gravity (g)
+# using images extracted from the video
+#
+# PeenduloSimple_DeterminacioonDeLaAceleracioonDeLa Gravedad.flv
+#
+# A set of images corresponding to a fixed length of
+# the simple pendulum. The length and the corresponding images
+# are in the vector L and Puntos, respectively.
+
 from pylab import *
 import numpy as np
 import scipy
@@ -11,36 +24,31 @@ from scipy.fftpack import fft, fftfreq
 from collections import Counter
 from numpy import polyval, polyfit
 
-
-#tempo = 5
-#NoImagMin = 6401
-#NoImagMax = 7776
-#LongPendulo = 83
-
 OmegCuadrados=[]
 
-# What kind of L?
+# These lenghts appear on the video. Uncertainty = +- 1 cm
 L = [46.8, 59, 66, 78.5, 83]
 InversoLongitudes = [100./46.8, 100./59, 100./66, 100./78.5, 100./83]
 
-# Fotogramas que funcionan
+# Number in the image data
 Puntos = [[236,1256],[1516,2761],[3016,4381],[4711,6151],[6401,7776]]
-
-#00236-01256    01516-02761   03016-04381   04711-06151     06401-07776
-#      46.8         59              66          78,5            83 (mas o mens 0,1)cm
-
-#Numero de imagenes que se tomara. Img max - imag min / numro de timpo enete cada imagen
 
 
 def Pendulo(NoImagMin,NoImagMax):
+
     tempo = 5
+    # "tempo" is 5 because is the number of photographs per seconds
     NoImagenes = (NoImagMax-NoImagMin)/tempo;
     Tutto=np.zeros(NoImagenes+1)
+
     for k in range(NoImagMin,NoImagMax + 1,tempo):
         if k<1000:
-            Bola1=imread("./scene00"+str(k)+".png")
+            Bola1=imread("./Imagenes_from_Video/scene00"+str(k)+".png")
         else:
-            Bola1=imread("./scene0"+str(k)+".png")
+            Bola1=imread("./Imagenes_from_Video/scene0"+str(k)+".png")
+        
+        # Applying some filters to prepare the image for the
+        # Calculus of "Center of Mass"
         Ce = np.array((0.9, 0.5, 0.45))
         S= Bola1-Ce
         D = np.sqrt((S**2).sum(axis=2))
@@ -61,8 +69,12 @@ def Pendulo(NoImagMin,NoImagMax):
         for l in range(1,n+1):
             if Elementos[l]==max:
                 b = l
+        # Measure the position of Center of Mass of the ball
         MassCenter = nd.measurements.center_of_mass(Filtro,FiltroNumber,b)
+        # Adding the position of Center of Mass in Tutto
         Tutto[(k-NoImagMin)/tempo]=MassCenter[1]
+    
+    # Finding the frecuency using Fourier Transform
     FFT = np.fft.fft(Tutto)
     L0 = len(FFT)
     b=ceil(L0*0.5)
@@ -74,9 +86,15 @@ def Pendulo(NoImagMin,NoImagMax):
     MaxFFT = np.max(FFT)
 
     Lol2=np.argmax(FFT)
+    # Converting "image" frecuency to "real" frecuency (seconds -1)
     OmegaCuad = float((Lol2*tempo*tempo*10/(NoImagMax-NoImagMin))**2)
     return OmegaCuad
 
+# Here is where the program starts
+print '\n -------------------------------'
+print '\n Program: find the gravity value from images extract form a YouTube video \n'
+print '\n Autor: F. E. Charry-Pastrana, feecharrypa@unal.edu.co '
+print '\n -------------------------------'
 
 for i in range(0,len(InversoLongitudes),1):
     print '\nEl programa se encuentra corriendo sobre las '
@@ -84,12 +102,15 @@ for i in range(0,len(InversoLongitudes),1):
     print L[i], 'cm'
     NoImagMin=Puntos[i][0]
     NoImagMax=Puntos[i][1]
+    # Calling the function
     Pendulo(NoImagMin,NoImagMax)
+    # Keep the results in OmegCuadrados to fit it then
     OmegCuadrados.append(Pendulo(NoImagMin,NoImagMax))
+
 
 coeficientes = polyfit(InversoLongitudes,OmegCuadrados,1)
 g= np.pi*np.pi*4*coeficientes[0]
 gporcentual = abs((g-980)*100/980);
 
-print 'El valor de la gravedad encontrado es', g, ' en cm/s^2. '
+print '\n \n El valor de la gravedad encontrado es g =', g, ' (cm/s^2). \n'
 print 'El error porcentual de este valor es ', gporcentual
