@@ -8,8 +8,8 @@ library(httr)
 library(RColorBrewer)
 
 # Mac FECHP
-directory="/Users/F.E.CharryPastrana/Documents/GitHub_PersonalCodes/Covid-19"
-directory=paste0(directory,'/Graphs_Per_Day')
+directory="/Users/F.E.CharryPastrana/Documents/07_Programación-GitHub/Codes"
+directory=paste0(directory,'/COVID19_2020')
 setwd(directory)
 
 #download the dataset from the ECDC website to a local temporary file
@@ -414,7 +414,7 @@ for(i in seq(1,length(Total$Country))){
 }
 # Ploting 
 #Absolute = 1, Relative = 2
-Absolu_or_Relativ = 1
+Absolu_or_Relativ = 0
 {
 if(Absolu_or_Relativ==1){
   Graph1Name = paste0(directory,"/", fechaNumeric, "_5_BarPlot_Abs.png")
