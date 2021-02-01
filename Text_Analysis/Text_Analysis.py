@@ -1,15 +1,15 @@
-# Analizing books such as "Hundred Years of Solitud" 
-# Autor: Félix Ernesto Charry Pastrana 
+# Analizing books such as "Hundred Years of Solitud"
+# Autor: Félix Ernesto Charry Pastrana
 # email: charrypastranaernesto@gmail.com
-# Date started: 2020 02 25 
+# Date started: 2020 02 25
 
 # Based on
 #  https://www.datacamp.com/community/tutorials/text-analytics-beginners-nltk
 
 '''
- The main question is which characterisctis DEFINE a book and, by extantion, 
- analizing many book of a particular writter, I want to know the differences 
- between two autors. 
+ The main question is which characterisctis DEFINE a book and, by extantion,
+ analizing many book of a particular writter, I want to know the differences
+ between two autors.
  Due the main Python library is written in English, all book will be read and analized in English.
 '''
 
@@ -19,12 +19,12 @@ import nltk
 import matplotlib.pyplot as plt
 
 # Frequency Distribution Function ----------------------------------------------
-def FuntionFrequencyDistribution(NombreLista, MaxPalabrasRepetidas, 
+def FuntionFrequencyDistribution(NombreLista, MaxPalabrasRepetidas,
     Guardar, AditionalName=''):
     from nltk.probability import FreqDist
     fdist = FreqDist(NombreLista)
     Max_Repeted_Words = MaxPalabrasRepetidas
-    
+
     if(Guardar == True):
         FileName_FreqDis = 'FreqDist_' + Book_Name + '_'
         FileName_FreqDis = FileName_FreqDis + str(MaxPalabrasRepetidas) + '_'
@@ -32,23 +32,25 @@ def FuntionFrequencyDistribution(NombreLista, MaxPalabrasRepetidas,
 
         plt.ion()
         fdist.plot(Max_Repeted_Words,cumulative=False)
+        plt.title(Book_Name+' '+AditionalName+' '+str(MaxPalabrasRepetidas))
         plt.savefig(Folder_Graphs+FileName_FreqDis, bbox_inches = "tight")
         plt.ioff()
-    else: 
+    else:
         fdist.plot(Max_Repeted_Words,cumulative=False)
-    
+
     plt.show()
 
-    return; 
+    return;
 # ------------------------------------------------------------------------------
 
 Folder_Main = '/Users/F.E.CharryPastrana/Documents/GitHub_PersonalCodes/'
+Folder_Main = '/Users/Feliche/Documents/Codes/'
 Folder_Main = Folder_Main + 'Text_Analysis/'
 
-Folder_Books    = Folder_Main + 'Books_in_English/'
+Folder_Books    = Folder_Main + 'Audiolibros/'
 Folder_Graphs   = Folder_Main + 'Graphs/'
 
-Book_Name   = 'LoveInTheTimeOfCholera'
+Book_Name   = 'Summaries'
 
 File_Name   = open(Folder_Books + Book_Name + '.txt','r')
 Text        = File_Name.read()
@@ -68,7 +70,7 @@ print('\n Total oraciones en archivo:', len(tokenized_sent))
 print('\n Total palabras en archivo:',  len(tokenized_word))
 
 # Stopwords --------------------------------------------------------------------
-# Stopwords considered as noise in the text. 
+# Stopwords considered as noise in the text.
 # Text may contain stop words such as is, am, are, this, a, an, the, etc.
 from nltk.corpus import stopwords
 
@@ -90,16 +92,16 @@ for w in tokenized_word:
 FuntionFrequencyDistribution(filtered_sent, 50, True, 'FilteredSentences')
 
 # Lexicon Normalization --------------------------------------------------------
-# Lexicon normalization considers another type of noise in the text. 
-# For example, connection, connected, connecting word reduce to a common word 
-# "connect". 
+# Lexicon normalization considers another type of noise in the text.
+# For example, connection, connected, connecting word reduce to a common word
+# "connect".
 # It reduces derivationally related forms of a word to a common root word.
 
 # Stemming - derivación
-# Stemming is a process of linguistic normalization, 
-# which reduces words to their word root word or chops off 
-# the derivational affixes. 
-# For example, connection, connected, connecting word 
+# Stemming is a process of linguistic normalization,
+# which reduces words to their word root word or chops off
+# the derivational affixes.
+# For example, connection, connected, connecting word
 # reduce to a common word "connect".
 
 from nltk.stem import PorterStemmer
@@ -107,14 +109,14 @@ from nltk.stem import SnowballStemmer
 
 #ps = SnowballStemmer('spanish') # Be careful about the method to do the stemming
 ps = PorterStemmer()
-# The following languages are supported: 
+# The following languages are supported:
 # Arabic, Danish, Dutch, English, Finnish, French, German, Hungarian, Italian,
 # Norwegian, Portuguese, Romanian, Russian, Spanish and Swedish.
 stemmed_words=[]
 
 for w in filtered_sent:
     stemmed_words.append(ps.stem(w))
-# ps.stem change Capital ltters and remove plurals 
+# ps.stem change Capital ltters and remove plurals
 
 #print("Filtered Sentence:",filtered_sent)
 #print("Stemmed Sentence:",stemmed_words)
@@ -122,10 +124,10 @@ for w in filtered_sent:
 #FuntionFrequencyDistribution(stemmed_words, 50, True)
 
 # Lemmatization
-# Lemmatization reduces words to their base word, 
-# which is linguistically correct lemmas. 
+# Lemmatization reduces words to their base word,
+# which is linguistically correct lemmas.
 # It transforms root word with the use of vocabulary and morphological analysis.
-# Lemmatization is usually more sophisticated than stemming. 
+# Lemmatization is usually more sophisticated than stemming.
 # Stemmer works on an individual word without knowledge of the context
 
 # Find first the verb, noun, etc.
@@ -138,10 +140,10 @@ stem = PorterStemmer()          # Stemming
 # print("Lemmatized Word Working: ", lem.lemmatize('working','v'))
 
 # Part Of Speech Tagging -------------------------------------------------------
-# The primary target of Part-of-Speech(POS) tagging is to identify the 
-# grammatical group of a given word. 
-# Whether it is a NOUN, PRONOUN, ADJECTIVE, VERB, ADVERBS, etc. 
-# based on the context. POS Tagging looks for relationships within the sentence 
+# The primary target of Part-of-Speech(POS) tagging is to identify the
+# grammatical group of a given word.
+# Whether it is a NOUN, PRONOUN, ADJECTIVE, VERB, ADVERBS, etc.
+# based on the context. POS Tagging looks for relationships within the sentence
 # and assigns a corresponding tag to the word.
 
 Sentence1   = tokenized_sent[1]
@@ -178,12 +180,11 @@ print('\n\n')
 # An important thing to remember about machine learning is that a model will
 # perform well on texts that are similar to the texts used to train it.
 
-# Once the algorithm has learned the style in terms of the most commonly used 
+# Once the algorithm has learned the style in terms of the most commonly used
 # words and rhythmic patterns
 
 # WORDS ADJACENCY NETWORKS - Methods
-# "A more reliable approach is to use functional, rather than meaningful, 
-# words: 'the,' 'and,' 'or,' 'to,' and so on," explains Segarra. 
-# "Everyone has to use these words, so analyzing how they differ between 
+# "A more reliable approach is to use functional, rather than meaningful,
+# words: 'the,' 'and,' 'or,' 'to,' and so on," explains Segarra.
+# "Everyone has to use these words, so analyzing how they differ between
 # authors gets closer to an objective measure of 'style'."
-
