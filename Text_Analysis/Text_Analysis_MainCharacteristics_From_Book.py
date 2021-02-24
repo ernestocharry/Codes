@@ -4,6 +4,8 @@
 # Date started: 2021 02 15
 '''
 This code will find the distribution of the length.
+Code 1: Generate Data
+Code 2: Read_Data
 '''
 import nltk # Natural Languaje TollKit nltk.download() Download all!
 import matplotlib.pyplot as plt
@@ -84,7 +86,7 @@ Max_Counts_TAG = 20
 Y = pd.DataFrame()
 
 #for j in range(0, len(all_epubs)):
-for j in range(0, 30):
+for j in range(0, 10):
     print(j)
     Text = epub2text(all_epubs[j])
     Text = ''.join(Text)
@@ -97,8 +99,10 @@ for j in range(0, 30):
     pdSentencesLength['Length'] = pdSentencesLength['Sentences'].apply(lambda x: len(word_tokenize(x)))
 
     # Audiobooks
-    #Name_of_Book = re.findall(r"/+[\w]+[.]+epub",all_epubs[j])[0][1:]
-    Name_of_Book = all_epubs[j]
+    Name_of_Book =all_epubs[j]
+    for r in ((epubFolder, ' '), (".epub", " "), ('-', ' '), ('_', ' '), ('–', ' ')):
+        Name_of_Book= Name_of_Book.replace(*r)
+    print(Name_of_Book)
     Main.loc[j, 'Name'] = Name_of_Book
     Main.loc[j, 'length_words_total']=pdSentencesLength['Length'].sum()
     Main.loc[j, 'number_of_sentences_total'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['count'])
@@ -138,6 +142,7 @@ for j in range(0, 30):
     Main.loc[j, 'Percentaje_Verb_Past']     = round(Total_verb_past*100/Total_Verb,0)
     Main.loc[j, 'Percentaje_Verb_Present']  = round(Total_verb_present*100/Total_Verb,0)
     Main.loc[j, 'Percentaje_Verb_Future']   = 100 - Main.loc[j, 'Percentaje_Verb_Past'] - Main.loc[j, 'Percentaje_Verb_Present']
+    Main.loc[j, 'Percentaje_Foreign_Words_10000'] = round(10000*len(Foreign_Words)/Main.loc[j, 'length_words_total'],2)
     #---------------------------------------------------------------------------
 
     lem = WordNetLemmatizer()       # Lemmatization
@@ -180,5 +185,5 @@ print('\n')
 
 File1 = '/Users/Feliche/Documents/Codes/Text_Analysis/Main.csv'
 File2 = '/Users/Feliche/Documents/Codes/Text_Analysis/Y.csv'
-Main.to_csv(File1)
-Y.to_csv(File2)
+Main.to_csv(File1, index=False)
+Y.to_csv(File2, index=False)
