@@ -84,7 +84,7 @@ Max_Counts_TAG = 20
 Y = pd.DataFrame()
 
 #for j in range(0, len(all_epubs)):
-for j in range(0, 3):
+for j in range(0, 30):
     print(j)
     Text = epub2text(all_epubs[j])
     Text = ''.join(Text)
@@ -102,8 +102,8 @@ for j in range(0, 3):
     Main.loc[j, 'Name'] = Name_of_Book
     Main.loc[j, 'length_words_total']=pdSentencesLength['Length'].sum()
     Main.loc[j, 'number_of_sentences_total'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['count'])
-    Main.loc[j, 'words_per_sentences_mean'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['mean'])
-    Main.loc[j, 'words_per_sentences_std'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['std'])
+    Main.loc[j, 'words_per_sentences_mean'] = round(float(pd.DataFrame(pdSentencesLength.describe()).loc['mean']),2)
+    Main.loc[j, 'words_per_sentences_std'] = round(float(pd.DataFrame(pdSentencesLength.describe()).loc['std']),2)
     Main.loc[j, 'words_per_sentences_min'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['min'])
     Main.loc[j, 'words_per_sentences_max'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['max'])
 
@@ -169,132 +169,16 @@ for j in range(0, 3):
     Y = Y.append(X, ignore_index=True)
 
 
-print('\n ----------------------------------------------------------------')
-#print(pdFrequencyReference.iloc[91])
-print(Main)
-print(Main.columns)
-print('\n ----------------------------------------------------------------')
-print(Y['Pron'].unique)
-print(Y.columns)
-print('\n')
-
-Folder_Main     = '/Users/Feliche/Documents/Codes/'
-#Folder_Main     = '/Users/charrypastrana/Documents/Codes/'
-Folder_Main     = Folder_Main + 'Text_Analysis/'
-
-Folder_Books    = Folder_Main + 'Audiolibros/'
-Folder_Graphs   = Folder_Main + 'Graphs/'
-
-all_books  = glob.glob(Folder_Books+"*.txt")
-Longitud_Folder_Books = len(Folder_Books)
-print('\n Se analizaran ',len(all_books),' libros from the folder',Folder_Books)
-
-LongitudMax = 800
-print('\n La longitud máxima de las oraciones analizadas será ', LongitudMax)
-
-pdFrequencyReference = pd.DataFrame({'Length':range(1,LongitudMax+1)})
-
-# Audiobooks
-Main = pd.DataFrame(columns=['Name'])
-TAG  = pd.DataFrame()
-Max_Counts_TAG = 20
-
-
-
-Y = pd.DataFrame()
-
-for j in range(0, len(all_books)):
-    Book_Name = all_books[j][Longitud_Folder_Books:len(all_books[j])]
-    print('\n ----------------------------------------------------------------')
-    print('\n j: ', j,'\t Book Analized: ', Book_Name)
-
-    File_Name   = open(all_books[j],'r')
-    Text        = File_Name.read()
-    print(type(Text))
-    Text = re.sub('\n', ' ', Text.lower())
-    tokenized_sent=sent_tokenize(Text)
-
-    # En pdSentencesLength se guardará las oraciones y su longitud
-    pdSentencesLength = pd.DataFrame({'Sentences':tokenized_sent})
-    pdSentencesLength['Length'] = pdSentencesLength['Sentences'].apply(lambda x: len(word_tokenize(x)))
-
-    # Audiobooks
-    Name_of_Book = re.findall(r"/+[\w]+[.]+txt",all_books[j])[0][1:]
-    Main.loc[j, 'Name'] = Name_of_Book
-    Main.loc[j, 'length_words_total']=pdSentencesLength['Length'].sum()
-    Main.loc[j, 'number_of_sentences_total'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['count'])
-    Main.loc[j, 'words_per_sentences_mean'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['mean'])
-    Main.loc[j, 'words_per_sentences_std'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['std'])
-    Main.loc[j, 'words_per_sentences_min'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['min'])
-    Main.loc[j, 'words_per_sentences_max'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['max'])
-
-    # Part Of Speech Tagging -------------------------------------------------------
-    # The primary target of Part-of-Speech(POS) tagging is to identify the
-    # grammatical group of a given word.
-    # Whether it is a NOUN, PRONOUN, ADJECTIVE, VERB, ADVERBS, etc.
-    # based on the context. POS Tagging looks for relationships within the sentence
-    # and assigns a corresponding tag to the word.
-
-
-    All_tag = nltk.pos_tag(word_tokenize(Text))
-    # Verb: past tense and past participle
-    Verb    = [a for (a, b) in All_tag if b in ['VBD', 'VBN'] ]
-    Total_verb_past = len(Verb)
-
-    # Verb: past tense and past participle
-    Verb_present    = [a for (a, b) in All_tag if b in ['VBG', 'VBP', 'VBZ'] ]
-    Total_verb_present = len(Verb_present)
-
-    Foreign_Words = [a for (a, b) in All_tag if b == 'FW' ]
-    Noun    = [a for (a, b) in All_tag if b in ['NN', 'NNS', 'NNP', 'NNPS'] ]
-
-
-    All_tag = nltk.pos_tag(word_tokenize(Text), tagset='universal')
-    Total_Verb = len([a for (a, b) in All_tag if b == 'VERB'])
-    Num     = [a for (a, b) in All_tag if b == 'NUM']
-    Pron    = [a for (a, b) in All_tag if b == 'PRON']
-    Punct   = [a for (a, b) in All_tag if b == '.']
-
-    #---------------------------------------------------------------------------
-    Main.loc[j, 'Percentaje_Verb_Past']     = round(Total_verb_past*100/Total_Verb,0)
-    Main.loc[j, 'Percentaje_Verb_Present']  = round(Total_verb_present*100/Total_Verb,0)
-    Main.loc[j, 'Percentaje_Verb_Future']   = 100 - Main.loc[j, 'Percentaje_Verb_Past'] - Main.loc[j, 'Percentaje_Verb_Present']
-    #---------------------------------------------------------------------------
-
-    lem = WordNetLemmatizer()       # Lemmatization
-
-    Verb_Lemma = []
-    for i in range(0,len(Verb)):
-        Verb_Lemma.append(lem.lemmatize(Verb[i],'v'))
-
-    X0 = pd.DataFrame(Max_Counts_TAG*[Name_of_Book], columns=['Name'])
-
-    fdist = FreqDist(Verb_Lemma)
-    Total_No = len(Verb_Lemma)
-    X1 = (pd.DataFrame(fdist.most_common(Max_Counts_TAG), columns = ['Verb', 'Verb_Counts']))
-    X1['Verb_Counts_Percentaje'] = X1['Verb_Counts']*100/Total_No
-
-    fdist = FreqDist(Noun)
-    Total_No = len(Noun)
-    X2 = (pd.DataFrame(fdist.most_common(Max_Counts_TAG), columns = ['Noun', 'Noun_Counts']))
-    X2['Noun_Counts_Percentaje'] = X2['Noun_Counts']*100/Total_No
-
-    fdist = FreqDist(Pron)
-    Total_No = len(Pron)
-    X3 = (pd.DataFrame(fdist.most_common(Max_Counts_TAG), columns = ['Pron', 'Pron_Counts']))
-    X3['Pron_Counts_Percentaje'] = X3['Pron_Counts']*100/Total_No
-
-    X = pd.concat([X0, X1, X2, X3], axis=1)
-    X.fillna(0, inplace=True)
-
-    Y = Y.append(X, ignore_index=True)
-
 
 print('\n ----------------------------------------------------------------')
 #print(pdFrequencyReference.iloc[91])
 print(Main)
 print(Main.columns)
 print('\n ----------------------------------------------------------------')
-print(Y['Pron'].unique)
 print(Y.columns)
 print('\n')
+
+File1 = '/Users/Feliche/Documents/Codes/Text_Analysis/Main.csv'
+File2 = '/Users/Feliche/Documents/Codes/Text_Analysis/Y.csv'
+Main.to_csv(File1)
+Y.to_csv(File2)
