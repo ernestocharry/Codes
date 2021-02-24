@@ -36,6 +36,7 @@ def FuntionFrequencyDistribution(NombreLista, MaxPalabrasRepetidas, Guardar, Adi
     return;
 
 Folder_Main     = '/Users/Feliche/Documents/Codes/'
+Folder_Main     = '/Users/charrypastrana/Documents/Codes/'
 Folder_Main     = Folder_Main + 'Text_Analysis/'
 
 Folder_Books    = Folder_Main + 'Audiolibros/'
@@ -94,6 +95,7 @@ for j in range(0, len(all_books)):
     All_tag = nltk.pos_tag(word_tokenize(Text), tagset='universal')
 
     Verb    = [a for (a, b) in All_tag if b == 'VERB']
+    print(Verb[:10])
     Noun    = [a for (a, b) in All_tag if b == 'NOUN']
     Num     = [a for (a, b) in All_tag if b == 'NUM']
     Pron    = [a for (a, b) in All_tag if b == 'PRON']
@@ -104,7 +106,7 @@ for j in range(0, len(all_books)):
     Verb_Lemma = []
     for i in range(0,len(Verb)):
         Verb_Lemma.append(lem.lemmatize(Verb[i],'v'))
-
+    print(Verb_Lemma[:10])
     X0 = pd.DataFrame(Max_Counts_TAG*[Name_of_Book], columns=['Name'])
 
     fdist = FreqDist(Verb_Lemma)
@@ -130,9 +132,9 @@ for j in range(0, len(all_books)):
 
 print('\n ----------------------------------------------------------------')
 #print(pdFrequencyReference.iloc[91])
-print(Main)
+print(Main.columns)
 print('\n ----------------------------------------------------------------')
-print(Y)
+print(Y.columns)
 print('\n')
 
 '''
