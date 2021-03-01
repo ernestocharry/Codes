@@ -78,6 +78,7 @@ def epub2text(epub_path):
 blacklist = [   '[document]',   'noscript', 'header',   'html', 'meta', 'head','input', 'script'   ]
 
 epubFolder = '/Users/Feliche/Documents/AmazonBestSellers/'
+epubFolder = '/Users/charrypastrana/Documents/AmazonBestSellers/'
 all_epubs  = glob.glob(epubFolder+"*.epub")
 
 Main = pd.DataFrame(columns=['Name'])
@@ -85,9 +86,11 @@ TAG  = pd.DataFrame()
 Max_Counts_TAG = 20
 Y = pd.DataFrame()
 
-#for j in range(0, len(all_epubs)):
-for j in range(0, 10):
+for j in range(0, len(all_epubs)):
+#for j in range(0, 4):
     print(j)
+    print(all_epubs[j])
+    ebook = epub.read_epub(all_epubs[j])
     Text = epub2text(all_epubs[j])
     Text = ''.join(Text)
 
@@ -110,6 +113,18 @@ for j in range(0, 10):
     Main.loc[j, 'words_per_sentences_std'] = round(float(pd.DataFrame(pdSentencesLength.describe()).loc['std']),2)
     Main.loc[j, 'words_per_sentences_min'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['min'])
     Main.loc[j, 'words_per_sentences_max'] = float(pd.DataFrame(pdSentencesLength.describe()).loc['max'])
+
+    for i in ['title', 'creator', 'identifier', 'contributor', 'publisher',
+                'rights', 'date', 'description']:
+        X = ebook.get_metadata('DC', i)
+        if X:
+            Main.loc[j, i] = ebook.get_metadata('DC', i)[0][0]
+
+
+    #Main.loc[j, 'identifier'] = ebook.get_metadata('DC', 'identifier')[0][0]
+    #Main.loc[j, 'publisher'] = ebook.get_metadata('DC', 'publisher')[0][0]
+    #Main.loc[j, 'date'] = ebook.get_metadata('DC', 'date')[0][0]
+    #Main.loc[j, 'description'] = ebook.get_metadata('DC', 'description')[0][0]
 
     # Part Of Speech Tagging -------------------------------------------------------
     # The primary target of Part-of-Speech(POS) tagging is to identify the
@@ -185,5 +200,7 @@ print('\n')
 
 File1 = '/Users/Feliche/Documents/Codes/Text_Analysis/Main.csv'
 File2 = '/Users/Feliche/Documents/Codes/Text_Analysis/Y.csv'
+File1 = '/Users/charrypastrana/Documents/Codes/Text_Analysis/Main.csv'
+File2 = '/Users/charrypastrana/Documents/Codes/Text_Analysis/Y.csv'
 Main.to_csv(File1, index=False)
 Y.to_csv(File2, index=False)
