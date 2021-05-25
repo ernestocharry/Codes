@@ -3,18 +3,18 @@
 _This repository has the codes developed in my academic career (Bachelor in physics - Universidad Nacional de Colombia, Master of Science (Physics) - Universidad Nacional Autónoma de México) as well as by my interests._
 
 ## Overview
-* Computational_Methods_in_Physics
-* Detector_Simulation_CPP
-* Text_Analysis
-* COVID19_2020
+* [Computational_Methods_in_Physics](https://github.com/ernestocharry/Codes/tree/master/Computational_Methods_in_Physics)
+* [Detector_Simulation_CPP](https://github.com/ernestocharry/Codes/tree/master/Detector_Simulation_CPP)
+* [Text_Analysis](https://github.com/ernestocharry/Codes/tree/master/Text_Analysis)
+* [COVID19_2020](https://github.com/ernestocharry/Codes/tree/master/COVID19_2020)
 
 ### Programming languages 📋
 * Mainly in Python
 * R, C++, FORTRAN
 
-### Professors ✒️
+### Professors who guided me ✒️
 * Edna Carolina Pinilla Beltrán
 * Jhon Albert Sánchez Cabeza
 * Santiago Francisco Caballero Benitez
-
-Programming with love!
+***
+Programming with love! 📌
