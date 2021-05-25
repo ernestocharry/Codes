@@ -2,6 +2,8 @@
 #### Félix Ernesto Charry Pastrana, charrypastranaernesto@gmaill.com
 _This repository has the codes developed in my academic career (Bachelor in physics - Universidad Nacional de Colombia, Master of Science (Physics) - Universidad Nacional Autónoma de México) as well as by my interests._
 
+[Curriculum vitae](https://github.com/ernestocharry/Codes/tree/master/cv/cv.pdf)
+
 ## Overview
 * [Computational_Methods_in_Physics](https://github.com/ernestocharry/Codes/tree/master/Computational_Methods_in_Physics)
 * [Detector_Simulation_CPP](https://github.com/ernestocharry/Codes/tree/master/Detector_Simulation_CPP)
@@ -17,4 +19,4 @@ _This repository has the codes developed in my academic career (Bachelor in phys
 * Jhon Albert Sánchez Cabeza
 * Santiago Francisco Caballero Benitez
 ***
-Programming with love! 📌
+⌨️ with ❤️! 📌
