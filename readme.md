@@ -1,17 +1,20 @@
 # Developer Portfolio
-### Félix Ernesto Charry Pastrana
-### charrypastranaernesto@gmaill.com
-
+#### Félix Ernesto Charry Pastrana, charrypastranaernesto@gmaill.com
+_This repository has the codes developed in my academic career (Bachelor in physics - Universidad Nacional de Colombia, Master of Science (Physics) - Universidad Nacional Autónoma de México) as well as by my interests._
 
 ## Overview
+* Computational_Methods_in_Physics
+* Detector_Simulation_CPP
+* Text_Analysis
+* COVID19_2020
 
-This repository has many of my codes developed in my academic career 
-as well as by my interests. 
+### Programming languages 📋
+* Mainly in Python
+* R, C++, FORTRAN
 
-Computational Methods in Physics and Detector Simulation has the codes 
-learn in my Bachelor Degree (Universidad Nacional de Colombia) and at the 
-Master’s Degree (Universidad Nacional de Colombia). There are some 
-reports in their folders. 
+### Professors ✒️
+* Edna Carolina Pinilla Beltrán
+* Jhon Albert Sánchez Cabeza
+* Santiago Francisco Caballero Benitez
 
-COVID-19 and Text Analysis has really simple codes: to watch the official 
-data of the pandemic and to learn how to analyze a text in Python. 
+Programming with love!
