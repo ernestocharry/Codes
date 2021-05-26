@@ -7,7 +7,7 @@ _This repository has the codes developed in my academic career (Bachelor in phys
 ## Overview
 * [Computational_Methods_in_Physics](https://github.com/ernestocharry/Codes/tree/master/Computational_Methods_in_Physics)
 * [Detector_Simulation_CPP](https://github.com/ernestocharry/Codes/tree/master/Detector_Simulation_CPP)
-* [Text_Analysis](https://github.com/ernestocharry/Codes/tree/master/Text_Analysis)
+* [Text_Analysis](https://github.com/ernestocharry/textAnalysis)
 * [COVID19_2020](https://github.com/ernestocharry/covid19_2020)
 
 ### Programming languages 📋
