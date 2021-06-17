@@ -9,6 +9,7 @@ _This repository has the codes developed in my academic career (Bachelor in phys
 * [Detector_Simulation](https://github.com/ernestocharry/detectorSimulation)
 * [Text_Analysis](https://github.com/ernestocharry/textAnalysis)
 * [COVID19_2020](https://github.com/ernestocharry/covid19_2020)
+* [Social Network, Instagram](https://github.com/ernestocharry/networkInstagram)
 
 ### Programming languages 📋
 * Mainly in Python
