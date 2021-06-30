@@ -15,9 +15,5 @@ _This repository has the codes developed in my academic career (Bachelor in phys
 * Mainly in Python
 * R, C++, FORTRAN
 
-### Professors who guided me ✒️
-* Edna Carolina Pinilla Beltrán
-* Jhon Albert Sánchez Cabeza
-* Santiago Francisco Caballero Benitez
 ***
 ⌨️ with ❤️! 📌
